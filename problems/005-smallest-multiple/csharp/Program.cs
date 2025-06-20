@@ -4,36 +4,34 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        long number = 1;
-        
-        int primesCount = 0;
-        
-        for(var i = 1; i <= 20; i++)
-        {
-            if(IsPrime(i))
-            {
-                primesCount++;
-                number *= i;
-            }
-        }
-        
-        number *= 3*(primesCount);
-        
-        Console.WriteLine(number);
+        Console.WriteLine(SmallestMultiple(20));
     }
     
-    static bool IsPrime(long n)
+    static long SmallestMultiple(int n)
     {
-        if (n <= 1) return false;
-        if (n == 2 || n == 3) return true;
-        if (n % 2 == 0 || n % 3 == 0) return false;
-    
-        for (long i = 5; i * i <= n; i += 6)
+        long lcm = 1;
+        
+        for (int i = 2; i <= n; i++)
         {
-            if (n % i == 0 || n % (i + 2) == 0)
-                return false;
+            lcm = LCM(lcm, i);
         }
-    
-        return true;
+        
+        return lcm;
+    }
+
+    static long LCM(long a, long b)
+    {
+        return a * b / GCD(a, b);
+    }
+
+    static long GCD(long a, long b)
+    {
+        while (b != 0)
+        {
+            long temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
     }
 }
